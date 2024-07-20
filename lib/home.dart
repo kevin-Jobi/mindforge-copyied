@@ -1,7 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:mind_forge/addTopic.dart';
+import 'package:mind_forge/boxes.dart';
+import 'package:mind_forge/model.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -11,7 +16,10 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> {
-  final TextEditingController _textFieldController=TextEditingController();
+  final TextEditingController _subjectController=TextEditingController();
+  final TextEditingController _durationController =TextEditingController();
+  List<String>subject=[];
+  List<String>duration=[];
 
   void _showAlertDialog(BuildContext context){                     // alertdialog start
     showDialog(context: context, builder: (BuildContext context){
@@ -23,7 +31,7 @@ class _MyHomeState extends State<MyHome> {
                 Container(
                   width: 150,
                   child: TextField(
-                    controller: _textFieldController,
+                    controller: _subjectController,
                     decoration: InputDecoration(
                       hintText: 'Subject',
                       border: OutlineInputBorder()
@@ -34,7 +42,7 @@ class _MyHomeState extends State<MyHome> {
                  Container(
                   width: 150,
                    child: TextField(
-                    controller: _textFieldController,
+                    controller: _durationController,
                     decoration: InputDecoration(
                       hintText: 'Duration',
                       border: OutlineInputBorder()
@@ -49,7 +57,25 @@ class _MyHomeState extends State<MyHome> {
                     width: 150,
                     color: Colors.blue,
                   ),
-                  onTap:(){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddTopic()));} ,
+                  onTap:(){
+                    final data= Model(subject: _subjectController.text,duration: _durationController.text);
+                     
+                   // subject.add(_subjectController.text);   
+                  //duration.add(_durationController.text);
+                  final box= Boxes.getData();
+                  box.add(data);
+                  data.save();
+                  _subjectController.clear();
+                  _durationController.clear();
+                  print(box);
+                    //  setState(() {
+                       
+                    //  });
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddTopic(subject: _subjectController.text)));
+                  // setState(() {
+                    
+                  // });
+                  } 
                 )
 
               ],
@@ -66,19 +92,22 @@ class _MyHomeState extends State<MyHome> {
     return  SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(75                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ),
+          preferredSize: Size.fromHeight(85                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ),
           child: AppBar(
             
               title: Center(
-                child: Text('TOPICS',
-                style: TextStyle(
-                  fontSize: 29,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0,28,0,0),
+                  child: Text('TOPICS',
+                  style: TextStyle(
+                    fontSize: 33,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white
+                    ),
+                    ),
+                )
                   ),
-                  )
-                  ),
-              backgroundColor: Color.fromARGB(255, 5, 238, 129),
+              backgroundColor: Colors.green,
               actions: [
                 // Padding(
                 //   padding: EdgeInsets.symmetric(horizontal: 10),
@@ -104,10 +133,119 @@ class _MyHomeState extends State<MyHome> {
               ],
           ),
         ),
+        body: 
+      //  SizedBox(height: 30,),
+        ValueListenableBuilder<Box<Model>>(
+          valueListenable: Boxes.getData().listenable(),
+         builder: (context,box,_){
+          var data = box.values.toList().cast<Model>();
+          return ListView.builder(
+            itemCount: box.length,
+            itemBuilder: ((context, index) {
+          return GestureDetector(
+            onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddTopic( subject: data[index].subject)));
+          },
+          onLongPress: (){
+            showMenu(
+              context: context,
+               position: RelativeRect.fromLTRB(100, 100, 0, 0),
+                items: <PopupMenuEntry>[
+                  PopupMenuItem(
+                    value: 'edit',
+                    child: ListTile(
+                      leading: Icon(Icons.edit),
+                      title: Text('Edit'),
+
+                  )
+                  ),
+                  PopupMenuItem(
+                    value: 'delete',
+                    child: ListTile(
+                      leading: Icon(Icons.delete),
+                      title: Text('Delete'),
+
+                  )
+                  ),
+
+                ]
+                ).then((value) {
+                  if(value=='edit'){
+
+                    
+                  }else if (value == 'delete'){
+
+                  }
+                });
+          },
+
+            // child: Padding(
+
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Container(
+            //     child: ListTile(
+            //      // title: Text(subject[index]),
+            //      title: Text(data[index].subject.toString()),
+            //       //trailing: Text(duration[index]),
+            //       trailing: Text(data[index].duration.toString()),
+            //       tileColor: Colors.green,
+            //     ),
+            //   ),
+            // ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(18,5,18,1),
+              child: Container(
+                
+                height: 50,
+              
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                        flex: 3,
+                      child: Container(
+                        height: 75,
+                         width: 50,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 5, 238, 129),
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        
+                       
+                        child: Center(child: Text(data[index].subject.toString(),
+                        style:TextStyle(fontSize: 20) ,)),
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                        flex: 1,
+                      child: Container(
+                        height: 75,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 5, 238, 129),
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+                        child: Center(child: Text(data[index].duration.toString(),
+                        style:TextStyle(fontSize: 20))),
+                      ),
+                    )
+                
+                  ],
+                ),
+              ),
+            ),
+          );
+          
+        }
+        )
+        );
+         }
+         ),
         floatingActionButton: Stack(
         alignment: Alignment.bottomRight,
         children: [
-          Container(
+
+          Container(                                       //floating action button start
             width: 100,
             height: 100,
             child: FloatingActionButton(
@@ -127,7 +265,7 @@ class _MyHomeState extends State<MyHome> {
             textAlign: TextAlign.center,
             )
             ),
-          ),
+          ),                                            //fab ends
           
         ],
       ),
