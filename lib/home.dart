@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:mind_forge/addTopic.dart';
 import 'package:mind_forge/boxes.dart';
+import 'package:mind_forge/details.dart';
 import 'package:mind_forge/model.dart';
 
 class MyHome extends StatefulWidget {
@@ -47,36 +44,35 @@ class _MyHomeState extends State<MyHome> {
                       hintText: 'Duration',
                       border: OutlineInputBorder()
                     ),
-                                   ),
+                    ),
                  ),
                  SizedBox(height: 15,),
 
-                GestureDetector(
-                  child: Container(
-                    height: 40,
-                    width: 150,
-                    color: Colors.blue,
-                  ),
-                  onTap:(){
-                    final data= Model(subject: _subjectController.text,duration: _durationController.text);
-                     
-                   // subject.add(_subjectController.text);   
-                  //duration.add(_durationController.text);
-                  final box= Boxes.getData();
-                  box.add(data);
-                  data.save();
-                  _subjectController.clear();
-                  _durationController.clear();
-                  print(box);
+                ElevatedButton(
+                  onPressed: () {
+                 if(_subjectController.text.isNotEmpty && _durationController.text.isNotEmpty){
+                    
+                  // _subjectController.clear();
+                  // _durationController.clear();
+                  
                     //  setState(() {
                        
                     //  });
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddTopic(subject: _subjectController.text)));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddTopic(subject: _subjectController.text,duration: _durationController.text,)));
                   // setState(() {
                     
                   // });
-                  } 
-                )
+                 }else{
+                  ScaffoldMessenger.of(context).showSnackBar(
+  SnackBar(
+    content: Text('Please fill the bar'),
+    backgroundColor: Colors.red,
+  ),
+);
+
+                 }
+                },
+                 child: Text('Next'))
 
               ],
             ),
@@ -85,7 +81,12 @@ class _MyHomeState extends State<MyHome> {
         ),
       );
     });
-  }                                                   //alertdialoge end
+  }      
+//
+//                                             //alertdialoge end
+
+
+bool _showPopupMenu=false;
 
   @override
   Widget build(BuildContext context) {
@@ -102,12 +103,12 @@ class _MyHomeState extends State<MyHome> {
                   style: TextStyle(
                     fontSize: 33,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white
+                    color: Colors.black
                     ),
                     ),
                 )
                   ),
-              backgroundColor: Colors.green,
+              backgroundColor: Color.fromARGB(255, 13, 227, 127),
               actions: [
                 // Padding(
                 //   padding: EdgeInsets.symmetric(horizontal: 10),
@@ -133,6 +134,7 @@ class _MyHomeState extends State<MyHome> {
               ],
           ),
         ),
+        //--------------------------------------- body: -------------------------------- start
         body: 
       //  SizedBox(height: 30,),
         ValueListenableBuilder<Box<Model>>(
@@ -144,7 +146,7 @@ class _MyHomeState extends State<MyHome> {
             itemBuilder: ((context, index) {
           return GestureDetector(
             onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddTopic( subject: data[index].subject)));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyDetails(subject: data[index].subject,subTopics: data[index].subtopic,)));
           },
           onLongPress: (){
             showMenu(
@@ -161,37 +163,32 @@ class _MyHomeState extends State<MyHome> {
                   ),
                   PopupMenuItem(
                     value: 'delete',
-                    child: ListTile(
-                      leading: Icon(Icons.delete),
-                      title: Text('Delete'),
-
-                  )
+                    child: GestureDetector(
+                      child: ListTile(
+                        leading: Icon(Icons.delete),
+                        title: Text('Delete'),
+                      ),
+                     
+                    )
                   ),
 
                 ]
                 ).then((value) {
                   if(value=='edit'){
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddTopic( subject: data[index].subject,duration: data[index].duration,)));
 
                     
                   }else if (value == 'delete'){
-
+                    setState(() {
+                          _showPopupMenu=false;
+                        });
+                       delete(data[index]);
                   }
                 });
           },
 
-            // child: Padding(
+           
 
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Container(
-            //     child: ListTile(
-            //      // title: Text(subject[index]),
-            //      title: Text(data[index].subject.toString()),
-            //       //trailing: Text(duration[index]),
-            //       trailing: Text(data[index].duration.toString()),
-            //       tileColor: Colors.green,
-            //     ),
-            //   ),
-            // ),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(18,5,18,1),
               child: Container(
@@ -201,21 +198,26 @@ class _MyHomeState extends State<MyHome> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+    // ------------------------------------------Subject----------------------- start
                     Expanded(
                         flex: 3,
                       child: Container(
                         height: 75,
                          width: 50,
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 5, 238, 129),
+                          color: Color.fromARGB(255, 96, 202, 99),
                           borderRadius: BorderRadius.circular(10)
                         ),
                         
                        
-                        child: Center(child: Text(data[index].subject.toString(),
-                        style:TextStyle(fontSize: 20) ,)),
+                        child: Center(
+                          child: Text(data[index].subject.toString(),
+                        style:TextStyle(fontSize: 20) 
+                        )
+                        ),
                       ),
                     ),
+         // --------------------------------------Subject --------------------end
                     SizedBox(width: 10,),
                     Expanded(
                         flex: 1,
@@ -225,7 +227,8 @@ class _MyHomeState extends State<MyHome> {
                         color: Color.fromARGB(255, 5, 238, 129),
                         borderRadius: BorderRadius.circular(10)
                       ),
-                        child: Center(child: Text(data[index].duration.toString(),
+                        child: Center(
+                          child: Text(data[index].duration.toString(),
                         style:TextStyle(fontSize: 20))),
                       ),
                     )
@@ -251,7 +254,7 @@ class _MyHomeState extends State<MyHome> {
             child: FloatingActionButton(
               onPressed: ()async{
             _showAlertDialog(context);
-            var box= await Hive.openBox('kevin');
+            // var box= await Hive.openBox('kevin');
             },
             backgroundColor: Color.fromARGB(255, 93, 169, 231), 
             shape: CircleBorder(),
@@ -284,7 +287,11 @@ class _MyHomeState extends State<MyHome> {
               label: 'Profile'
               )
         ]),
+       
       ),
     );
   }
+   void delete(Model model) async{
+    await model.delete();
+        }
 }

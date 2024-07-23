@@ -18,7 +18,7 @@ class ModelAdapter extends TypeAdapter<Model> {
     };
     return Model(
       subject: fields[0] as String,
-      duration: fields[1] as String,
+      duration: fields[1] as String, subtopic: [],
     );
   }
 
