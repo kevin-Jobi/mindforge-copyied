@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:mind_forge/login.dart';
+import 'package:mind_forge/screens/on-boarding/login.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({super.key});

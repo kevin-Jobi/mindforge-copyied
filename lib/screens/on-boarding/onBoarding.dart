@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:mind_forge/logOrSign.dart';
+import 'package:mind_forge/screens/on-boarding/logOrSign.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class OnBoarding extends StatelessWidget {
   const OnBoarding({super.key});
@@ -18,7 +18,9 @@ class OnBoarding extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(13,35,8,8),
               child: Text('WELCOME TO MIND FORGE  STUDY PLANNER ',
               textAlign: TextAlign.left,
-              style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500,fontFamily:'Playfair Display'  ),
+              // style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500,fontFamily:'Playfair Display'
+              //   ),
+              style:GoogleFonts.aBeeZee(fontSize: 30,fontWeight: FontWeight.w500) ,
               ),
             ),
             Padding(

@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mind_forge/home.dart';
+import 'package:mind_forge/screens/dashboard/home.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
