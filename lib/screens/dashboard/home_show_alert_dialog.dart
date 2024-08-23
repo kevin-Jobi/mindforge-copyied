@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mind_forge/screens/dashboard/addTopic.dart';
+import 'package:mind_forge/screens/dashboard/add_topic.dart';
 
 void showAlertDialog(BuildContext context, TextEditingController subjectController, TextEditingController durationController) {
   showDialog(
@@ -16,7 +16,7 @@ void showAlertDialog(BuildContext context, TextEditingController subjectControll
               'Add Subject',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.green[900],
+                color: Colors.green[900], // Updated color
               ),
             ),
             content: Column(
@@ -28,6 +28,11 @@ void showAlertDialog(BuildContext context, TextEditingController subjectControll
                     hintText: 'Subject',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.orange[300]!), // Border color
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.orange[600]!, width: 2.0), // Focused border color
                     ),
                   ),
                 ),
@@ -39,25 +44,30 @@ void showAlertDialog(BuildContext context, TextEditingController subjectControll
                     hintText: 'Select Date',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.orange[300]!), // Border color
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.orange[600]!, width: 2.0), // Focused border color
                     ),
                   ),
                   onTap: () async {
                     DateTime? pickedDate = await showDatePicker(
                       context: context,
                       initialDate: DateTime.now(),
-                     firstDate: DateTime.now(),
-                      lastDate: DateTime(2100)
-                      );
-                      if(pickedDate !=null){
-                        String formatteedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                        durationController.text = formatteedDate;
-                      }
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(2100),
+                    );
+                    if (pickedDate != null) {
+                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                      durationController.text = formattedDate;
+                    }
                   },
                 ),
                 SizedBox(height: 15),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green[800],
+                    backgroundColor: Colors.orange[800], // Button color
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -83,15 +93,11 @@ void showAlertDialog(BuildContext context, TextEditingController subjectControll
                 ),
               ],
             ),
+            backgroundColor: Colors.orange[100],
           ),
         ),
       );
     },
+    
   );
 }
-
-
-
-
-
-

@@ -35,8 +35,10 @@ class _AddSubtopicImagesState extends State<AddSubtopicImages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.orange[100], // Background color
       appBar: AppBar(
         title: Text('Add Images'),
+        backgroundColor: Colors.orange[600], // AppBar color
       ),
       body: Column(
         children: [
@@ -71,6 +73,9 @@ class _AddSubtopicImagesState extends State<AddSubtopicImages> {
           ElevatedButton(
             onPressed: _pickImage,
             child: Text('Add Image'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange[600], // Button color
+            ),
           ),
           SizedBox(height: 20),
           ElevatedButton(
@@ -89,6 +94,7 @@ class _AddSubtopicImagesState extends State<AddSubtopicImages> {
                 assignmentDescriptions: widget.model.assignmentDescriptions,
                 examDates: widget.model.examDates,
                 examDescriptions: widget.model.examDescriptions,
+                subtopicChecked: widget.model.subtopicChecked,
               );
 
               final box = Boxes.getData();
@@ -98,6 +104,9 @@ class _AddSubtopicImagesState extends State<AddSubtopicImages> {
               Navigator.of(context).pop();
             },
             child: Text('Save'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange[600], // Button color
+            ),
           ),
           SizedBox(height: 20),
         ],

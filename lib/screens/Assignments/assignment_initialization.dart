@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void initializeAssignmentAndExamFields({
   required List<TextEditingController> assignmentControllers,
@@ -9,6 +10,7 @@ void initializeAssignmentAndExamFields({
   required List<TextEditingController> examDateControllers,
   required List<TextEditingController> examDescriptionControllers,
   required List<Widget> wholeExamTextField,
+  required context 
 }) {
   // Initialize Assignment Controllers and Widgets
   assignmentControllers.add(TextEditingController());
@@ -40,12 +42,26 @@ void initializeAssignmentAndExamFields({
         height: 60,
         width: 200,
         child: TextFormField(
+          keyboardType: TextInputType.number,
           controller: assignmentDeadlineControllers[0],
+          readOnly: true,
           decoration: InputDecoration(
             labelText: 'Deadline',
             hintText: 'Deadline',
             border: OutlineInputBorder(),
           ),
+          onTap: ()async{
+            DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+               firstDate: DateTime.now(),
+                lastDate: DateTime(2100)
+                );
+                if(pickedDate !=null) {
+                  String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+                  assignmentDeadlineControllers[0].text = formattedDate;
+                }
+          },
         ),
       ),
     ),
@@ -96,12 +112,25 @@ void initializeAssignmentAndExamFields({
         height: 60,
         width: 200,
         child: TextFormField(
+          keyboardType: TextInputType.number,
           controller: examDateControllers[0],
+          readOnly: true,
           decoration: InputDecoration(
             labelText: 'Date',
             hintText: 'Date',
             border: OutlineInputBorder(),
           ),
+          onTap: () async{
+            DateTime? pickedDate = await showDatePicker(
+              context: context,
+              firstDate: DateTime.now(),
+              initialDate: DateTime.now(),
+              lastDate: DateTime(2100));
+              if(pickedDate !=null){
+                String formatedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+                examDateControllers[0].text=formatedDate;
+              }
+          },
         ),
       ),
     ),

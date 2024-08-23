@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mind_forge/screens/Assignments/viewAsmts.dart';
-
-import 'package:mind_forge/screens/dashboard/myHomeContent.dart';
+import 'package:mind_forge/screens/assignments/viewAsmts.dart';
+import 'package:mind_forge/screens/dashboard/my_home_content.dart';
 import 'package:mind_forge/screens/exam/exam.dart';
 import 'package:mind_forge/screens/media/media.dart';
-import 'package:mind_forge/screens/profile/profile.dart';
-
+import 'package:mind_forge/screens/profile/account.dart';
+import 'package:mind_forge/screens/search/search_topics.dart';
 import 'package:mind_forge/services/models/model.dart';
 
 class MyHome extends StatefulWidget {
@@ -16,98 +15,106 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> {
- 
-  List<String>subject=[];
-  List<String>duration=[];
-  int _currentIndex=0;
-  final List<Widget> _btmScreens=[
+  int _currentIndex = 0;
+  final List<Widget> _btmScreens = [
     MyHomeContent(),
     Media(),
-    MyAssingments(),
+    MyAssignments(),
     MyExams(),
   ];
 
-  void onTabTapped(int index){
+  void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
   }
 
-  
-//
-//                                             //alertdialoge end
-
-
-
-
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
+    return SafeArea(
       child: Scaffold(
-        appBar: _currentIndex==0? PreferredSize(
-          preferredSize: Size.fromHeight(85),
-          child: AppBar(centerTitle: true,
-            
-              title: Center(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0,28,0,0),
-                  child: Text('TOPICS',
-                  
-                  style: TextStyle(
-                    fontSize: 33,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white
+        appBar: _currentIndex == 0
+            ? PreferredSize(
+                preferredSize: Size.fromHeight(85),
+                child: AppBar(
+                  centerTitle: true,
+                  title: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 28, 0, 0),
+                    child: Text(
+                      'TOPICS',
+                      style: TextStyle(
+                        fontSize: 33,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
-                    ),
-                )
                   ),
-                  actions: [IconButton(
-                    onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyProfile()));
-                    },
-                     icon: Icon(Icons.more_vert,color: Colors.white , )
-                     )],
-              backgroundColor: Colors.black
-          
-          ),
-        ) :null,
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => SearchPage(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.search, color: Colors.white),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => MyProfile(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.more_vert, color: Colors.white),
+                      ),
+                    ),
+                  ],
+                  backgroundColor: Colors.orange[600],
+                ),
+              )
+            : null,
         //--------------------------------------- body: -------------------------------- start
         body: _btmScreens[_currentIndex],
         //--------------------------------------- body: -------------------------------- end
-        
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onTabTapped,
-        currentIndex:_currentIndex ,
-        selectedItemColor: Color.fromARGB(255, 228, 47, 6),
-        unselectedItemColor: Color.fromARGB(255, 231, 218, 47),
-        backgroundColor: Color.fromARGB(255, 7, 7, 7),
-        type: BottomNavigationBarType.fixed,
-        
-        items: [
-          BottomNavigationBarItem(
-          
-            icon: Icon(Icons.home),
-            label: 'Home'
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: onTabTapped,
+          currentIndex: _currentIndex,
+          selectedItemColor: Colors.orange[600],
+          unselectedItemColor: Colors.orange[200],
+          backgroundColor: Color.fromARGB(255, 73, 117, 75),
+          type: BottomNavigationBarType.fixed,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.folder), 
-              label: 'Media'
-              ),
-             BottomNavigationBarItem(
+              icon: Icon(Icons.folder),
+              label: 'Media',
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.assignment),
-              label: 'Assingment'),
-               BottomNavigationBarItem(
+              label: 'Assignment',
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.quiz_rounded),
-              label: 'Exam'
-              ),
-              
-        ]),
-        
-       
+              label: 'Exam',
+            ),
+          ],
+        ),
       ),
     );
   }
-   void delete(Model model) async{
+
+  void delete(Model model) async {
     await model.delete();
-        }
+  }
 }

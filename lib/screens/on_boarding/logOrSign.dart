@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mind_forge/screens/on-boarding/login.dart';
-import 'package:mind_forge/screens/on-boarding/signUp.dart';
+import 'package:mind_forge/screens/on_boarding/login.dart';
+import 'package:mind_forge/screens/on_boarding/signUp.dart';
 
 class LognSign extends StatelessWidget {
   const LognSign({super.key});

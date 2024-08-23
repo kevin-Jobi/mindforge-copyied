@@ -28,10 +28,12 @@ class Model extends HiveObject{
   List<String>examDates=[];
   @HiveField(10)
   List<String>examDescriptions=[];
+  @HiveField(11)
+  List<bool> subtopicChecked=[];
 
   
 
-  Model({required this.subject, required this.duration,required this.subtopic,required this.links,required this.images,required this.assignments,required this.exams,required this.assignmentDeadlines, required this.assignmentDescriptions, required this.examDates, required this.examDescriptions});
+  Model({required this.subject, required this.duration,required this.subtopic,required this.links,required this.images,required this.assignments,required this.exams,required this.assignmentDeadlines, required this.assignmentDescriptions, required this.examDates, required this.examDescriptions,required this.subtopicChecked });
 }
 
 @HiveType(typeId: 1)

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'dart:typed_data';
-import 'package:mind_forge/screens/Assignments/addAssignments&Exam.dart';
+import 'package:mind_forge/screens/assignments/addAssignments&Exam.dart';
 
 
 // Function to add a new link text field
@@ -78,5 +78,52 @@ void handleNextButton({
       ),
     ),
   );
+}
+
+
+initializeTextfields(_linkControllers,_linkTextFields,_subtopicControllers,_subtopicTextFields){
+    _linkControllers.add(TextEditingController());
+    _linkTextFields.add(
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextFormField(
+          controller: _linkControllers[0],
+          decoration: InputDecoration(
+            labelText: 'Enter link',
+            hintText: 'Paste link',
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.green[900]!, width: 3.0),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.green[700]!, width: 3.0),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    _subtopicControllers.add(TextEditingController());
+    _subtopicTextFields.add(
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextFormField(
+          controller: _subtopicControllers[0],
+          decoration: InputDecoration(
+            labelText: 'Enter subtopic',
+            hintText: 'Subtopic',
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.green[900]!, width: 3.0),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.green[700]!, width: 3.0),
+            ),
+          ),
+        ),
+      ),
+    );
 }
 

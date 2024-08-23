@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mind_forge/screens/on-boarding/logOrSign.dart';
+import 'package:mind_forge/screens/on_boarding/logOrSign.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OnBoarding extends StatelessWidget {

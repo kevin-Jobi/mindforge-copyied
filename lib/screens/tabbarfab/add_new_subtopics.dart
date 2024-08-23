@@ -18,6 +18,7 @@ class _NewSubtopicsState extends State<NewSubtopics> {
   void initState() {
     super.initState();
     _subtopicControllers.add(TextEditingController());
+    widget.model.subtopicChecked.add(false);
 
     _wholeSubtopicTextFields.add(
       Padding(
@@ -30,8 +31,17 @@ class _NewSubtopicsState extends State<NewSubtopics> {
             decoration: InputDecoration(
               labelText: 'Subtopic',
               hintText: 'Subtopic',
-              border: OutlineInputBorder(),
+              labelStyle: TextStyle(color: Colors.orange[900]), // Label color
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                borderSide: BorderSide(color: Colors.orange[300]!, width: 3.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                borderSide: BorderSide(color: Colors.orange[600]!, width: 3.0),
+              ),
             ),
+            cursorColor: Colors.orange[600],
           ),
         ),
       ),
@@ -52,8 +62,17 @@ class _NewSubtopicsState extends State<NewSubtopics> {
               decoration: InputDecoration(
                 labelText: 'Subtopic',
                 hintText: 'Subtopic',
-                border: OutlineInputBorder(),
+                labelStyle: TextStyle(color: Colors.orange[900]), // Label color
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                  borderSide: BorderSide(color: Colors.orange[300]!, width: 3.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                  borderSide: BorderSide(color: Colors.orange[600]!, width: 3.0),
+                ),
               ),
+              cursorColor: Colors.orange[600],
             ),
           ),
         ),
@@ -64,8 +83,10 @@ class _NewSubtopicsState extends State<NewSubtopics> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.orange[100], // Background color
       appBar: AppBar(
         title: Text('Add Subtopics'),
+        backgroundColor: Colors.orange[600], // AppBar color
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -73,7 +94,11 @@ class _NewSubtopicsState extends State<NewSubtopics> {
             ListTile(
               title: Text(
                 'Add Subtopic',
-                style: TextStyle(fontSize: 25),
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.orange[900], // Text color
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             SizedBox(
@@ -86,15 +111,17 @@ class _NewSubtopicsState extends State<NewSubtopics> {
             ElevatedButton(
               onPressed: _addSubtopicTextField,
               child: Text('Add More'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange[600], // Button color
+              ),
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
                 for (int i = 0; i < _subtopicControllers.length; i++) {
                   if (_subtopicControllers[i].text.isNotEmpty) {
                     widget.model.subtopic.add(_subtopicControllers[i].text);
+                    widget.model.subtopicChecked.add(false);
                   }
                 }
 
@@ -110,6 +137,7 @@ class _NewSubtopicsState extends State<NewSubtopics> {
                   assignmentDescriptions: widget.model.assignmentDescriptions,
                   examDates: widget.model.examDates,
                   examDescriptions: widget.model.examDescriptions,
+                  subtopicChecked: widget.model.subtopicChecked,
                 );
 
                 final box = Boxes.getData();
@@ -119,6 +147,9 @@ class _NewSubtopicsState extends State<NewSubtopics> {
                 Navigator.of(context).pop();
               },
               child: Text('Save'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange[600], // Button color
+              ),
             ),
           ],
         ),

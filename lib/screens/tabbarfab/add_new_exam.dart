@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mind_forge/services/models/model.dart';
 import 'package:mind_forge/services/repos/boxes.dart';
 
@@ -50,11 +51,24 @@ class _NewExamsState extends State<NewExams> {
           width: 200,
           child: TextFormField(
             controller: _examDateControllers[0],
+            readOnly: true,
             decoration: InputDecoration(
               labelText: 'Date',
               hintText: 'Date',
               border: OutlineInputBorder()
             ),
+               onTap: () async{
+              DateTime? pickedDate = await showDatePicker(
+                context: context,
+                 firstDate: DateTime.now(),
+                  initialDate: DateTime.now(),
+                   lastDate: DateTime(2100)
+                   );
+                   if(pickedDate !=null){
+                    String formatedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+                    _examDateControllers[0].text = formatedDate;
+                   }
+            },
           ),
         ),
       )
@@ -104,12 +118,24 @@ class _NewExamsState extends State<NewExams> {
           height: 60,
           width: 200,
           child: TextFormField(
-            controller: _examDateControllers[0],
+            controller: _examDateControllers[_examDateControllers.length-1],
             decoration: InputDecoration(
               labelText: 'Data',
               hintText: 'Date',
               border: OutlineInputBorder()
             ),
+               onTap: () async{
+              DateTime? pickedDate = await showDatePicker(
+                context: context,
+                 firstDate: DateTime.now(),
+                  initialDate: DateTime.now(),
+                   lastDate: DateTime(2100)
+                   );
+                   if(pickedDate !=null){
+                    String formatedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+                   _examDateControllers[_examDateControllers.length-1].text = formatedDate;
+                   }
+            },
           ),
                 ),
         )
@@ -122,7 +148,7 @@ class _NewExamsState extends State<NewExams> {
                    height: 60,
                    width: 200,
                    child: TextFormField(
-            controller: _examDescriptionControllers[0],
+            controller: _examDescriptionControllers[_examDescriptionControllers.length-1],
             decoration: InputDecoration(
               labelText: 'Description',
               hintText: 'Description',
@@ -208,7 +234,20 @@ class _NewExamsState extends State<NewExams> {
                     
                   
                   // print(exams);
-                final data= Model(subject: widget.model.subject,duration: widget.model.duration,subtopic: widget.model.subtopic,links: widget.model.links,images: widget.model.images, assignments:widget.model. assignments,exams: widget.model.exams,assignmentDeadlines:widget.model.assignmentDeadlines,assignmentDescriptions:widget.model.assignmentDescriptions,examDates:widget.model.examDates,examDescriptions:widget.model. examDescriptions);
+                final data= Model(
+                  subject: widget.model.subject,
+                  duration: widget.model.duration,
+                  subtopic: widget.model.subtopic,
+                  links: widget.model.links,
+                  images: widget.model.images,
+                   assignments:widget.model. assignments,
+                   exams: widget.model.exams,
+                   assignmentDeadlines:widget.model.assignmentDeadlines,
+                   assignmentDescriptions:widget.model.assignmentDescriptions,
+                   examDates:widget.model.examDates,
+                   examDescriptions:widget.model. examDescriptions,
+                   subtopicChecked: widget.model.subtopicChecked
+                   );
                        
                     final box= Boxes.getData();
                     await box.put(widget.model.key, data);

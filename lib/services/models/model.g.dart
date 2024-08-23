@@ -28,13 +28,14 @@ class ModelAdapter extends TypeAdapter<Model> {
       assignmentDescriptions: (fields[8] as List).cast<String>(),
       examDates: (fields[9] as List).cast<String>(),
       examDescriptions: (fields[10] as List).cast<String>(),
+      subtopicChecked: (fields[11] as List).cast<bool>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Model obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.subject)
       ..writeByte(1)
@@ -56,7 +57,9 @@ class ModelAdapter extends TypeAdapter<Model> {
       ..writeByte(9)
       ..write(obj.examDates)
       ..writeByte(10)
-      ..write(obj.examDescriptions);
+      ..write(obj.examDescriptions)
+      ..writeByte(11)
+      ..write(obj.subtopicChecked);
   }
 
   @override
