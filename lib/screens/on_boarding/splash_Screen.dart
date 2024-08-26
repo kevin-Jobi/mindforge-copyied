@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child:GestureDetector(
           child: Image.asset(
-            'assets/images/Screenshot 2024-07-06 123812 ed.png',
+            'assets/images/splashI_image.jpg',
             height: 300,
             ),
             onTap:(){ Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const MyHome()));} ,
@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
   Future<void> gotoHome()async{
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 3));
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>MyHome()));
   }
  

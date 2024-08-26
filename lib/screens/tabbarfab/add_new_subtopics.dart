@@ -31,17 +31,8 @@ class _NewSubtopicsState extends State<NewSubtopics> {
             decoration: InputDecoration(
               labelText: 'Subtopic',
               hintText: 'Subtopic',
-              labelStyle: TextStyle(color: Colors.orange[900]), // Label color
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                borderSide: BorderSide(color: Colors.orange[300]!, width: 3.0),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                borderSide: BorderSide(color: Colors.orange[600]!, width: 3.0),
-              ),
+              border: OutlineInputBorder(),
             ),
-            cursorColor: Colors.orange[600],
           ),
         ),
       ),
@@ -62,17 +53,8 @@ class _NewSubtopicsState extends State<NewSubtopics> {
               decoration: InputDecoration(
                 labelText: 'Subtopic',
                 hintText: 'Subtopic',
-                labelStyle: TextStyle(color: Colors.orange[900]), // Label color
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                  borderSide: BorderSide(color: Colors.orange[300]!, width: 3.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                  borderSide: BorderSide(color: Colors.orange[600]!, width: 3.0),
-                ),
+                border: OutlineInputBorder(),
               ),
-              cursorColor: Colors.orange[600],
             ),
           ),
         ),
@@ -85,8 +67,8 @@ class _NewSubtopicsState extends State<NewSubtopics> {
     return Scaffold(
       backgroundColor: Colors.orange[100], // Background color
       appBar: AppBar(
-        title: Text('Add Subtopics'),
-        backgroundColor: Colors.orange[600], // AppBar color
+        title: Text('New Subtopics'),
+        backgroundColor: Colors.green[700], // AppBar color
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -94,25 +76,19 @@ class _NewSubtopicsState extends State<NewSubtopics> {
             ListTile(
               title: Text(
                 'Add Subtopic',
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.orange[900], // Text color
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 25, color: Colors.green[900]), // Text color
               ),
             ),
             SizedBox(
               child: Column(
-                children: [
-                  ..._wholeSubtopicTextFields,
-                ],
+                children: _wholeSubtopicTextFields,
               ),
             ),
             ElevatedButton(
               onPressed: _addSubtopicTextField,
-              child: Text('Add More'),
+              child: Text('Add'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange[600], // Button color
+                backgroundColor: Color.fromARGB(255, 114, 202, 119), // Button color
               ),
             ),
             SizedBox(height: 20),
@@ -148,9 +124,10 @@ class _NewSubtopicsState extends State<NewSubtopics> {
               },
               child: Text('Save'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange[600], // Button color
+                backgroundColor: Color.fromARGB(255, 114, 202, 119), // Button color
               ),
             ),
+            SizedBox(height: 20),
           ],
         ),
       ),
