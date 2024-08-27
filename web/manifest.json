@@ -1,6 +1,6 @@
 {
-    "name": "mind_forge",
-    "short_name": "mind_forge",
+    "name": "mind_forge_responsive",
+    "short_name": "mind_forge_responsive",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
